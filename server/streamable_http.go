@@ -227,6 +227,8 @@ func (s *StreamableHTTPServer) handlePost(w http.ResponseWriter, r *http.Request
 	var baseMessage struct {
 		Method mcp.MCPMethod `json:"method"`
 	}
+
+	fmt.Println("raw message:", string(rawData))
 	if err := json.Unmarshal(rawData, &baseMessage); err != nil {
 		s.writeJSONRPCError(w, nil, mcp.PARSE_ERROR, "request body is not valid json")
 		return
@@ -317,6 +319,9 @@ func (s *StreamableHTTPServer) handlePost(w http.ResponseWriter, r *http.Request
 		w.WriteHeader(http.StatusAccepted)
 		return
 	}
+
+	resp, _ := json.Marshal(response)
+	fmt.Println(string(resp))
 
 	// Write response
 	mu.Lock()

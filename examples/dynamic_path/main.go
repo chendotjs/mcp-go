@@ -28,6 +28,8 @@ func main() {
 		mcpServer,
 		server.WithDynamicBasePath(func(r *http.Request, sessionID string) string {
 			tenant := r.PathValue("tenant")
+
+			fmt.Println(tenant)
 			return "/api/" + tenant
 		}),
 		server.WithBaseURL(fmt.Sprintf("http://localhost%s", addr)),
